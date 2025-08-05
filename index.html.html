@@ -1,0 +1,248 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <title>Interaktive Karte Warschau</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
+        }
+        #map {
+            height: 100%;
+            width: 70%;
+        }
+        #sidebar {
+            width: 30%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 1em;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+        .entry {
+            margin-bottom: 1em;
+            padding-bottom: 1em;
+            border-bottom: 1px solid #ddd;
+        }
+        select {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+        }
+        a {
+            word-break: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="sidebar">
+        <h2>Orte in Warschau</h2>
+        <select id="categoryFilter">
+            <option value="Alle">Alle Kategorien</option>
+            
+            <option value="Ausgehen">Ausgehen</option>
+            
+            <option value="Bücher">Bücher</option>
+            
+            <option value="Café">Café</option>
+            
+            <option value="Freiwilligenwohnung">Freiwilligenwohnung</option>
+            
+            <option value="Kultur">Kultur</option>
+            
+            <option value="Lebensmittel">Lebensmittel</option>
+            
+            <option value="PNWM">PNWM</option>
+            
+            <option value="Restaurant">Restaurant</option>
+            
+            <option value="Sonstiges">Sonstiges</option>
+            
+        </select>
+        <div id="list">
+            
+            <div class="entry" data-category="Café">
+                <strong>No i Co </strong><br>
+                <em>Café</em><br>
+                Café mit leckerem Kaffee und sehr sehr guten Zimtschnecken<br>
+                <a href="https://maps.app.goo.gl/tjhmBWepWSi6xTNB7" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="Café">
+                <strong>El Cafetero Kawiarnia - Plac Zbawiciela</strong><br>
+                <em>Café</em><br>
+                Kleines Café mit leckeren Kuchen. Bester Kaffee in Warschau. Im Sommer kann man schön draußen sitzen.<br>
+                <a href="https://maps.app.goo.gl/h3wrRxX7LthzkYUH7" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="Café">
+                <strong>HAŁAS Coffee+Vinyl</strong><br>
+                <em>Café</em><br>
+                Café mit Garten. Das Konzept: Café und Plattenladen zugleich. <br>
+                <a href="https://maps.app.goo.gl/vckk6AL5k1ddGrqn6" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="Café">
+                <strong>Norm Core | Vintage Kolektyw</strong><br>
+                <em>Café</em><br>
+                Café in einem Möbelladen? Hier kann man alte Möbel und Accessoires kaufen und gleichzeitig bei einem Kaffee oder Tee interessante Inneneinrichtung begutachten. <br>
+                <a href="https://maps.app.goo.gl/V1gv4nRWcxyv1ATA6" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="Restaurant">
+                <strong>Thaisty </strong><br>
+                <em>Restaurant</em><br>
+                Thailändisches Restaurant mit großer Auswahl. <br>
+                <a href="https://maps.app.goo.gl/DidBUQQ7UP9tBJgr7" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="Restaurant">
+                <strong>Lokal Vegan Bistro</strong><br>
+                <em>Restaurant</em><br>
+                Veganes Restaurant. Polnische Speisen wie Kotlet Schabowy vegan zubereitet.<br>
+                <a href="https://maps.app.goo.gl/h5DYtiEg85LpWDsX7" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="Bücher">
+                <strong>Deutsches Historisches Institut Warschau</strong><br>
+                <em>Bücher</em><br>
+                Das DHI hat eine Bibliothek mit deutschsprachigen Büchern<br>
+                <a href="https://maps.app.goo.gl/v5nd3TCNddCcj5ALA" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="Bücher">
+                <strong>Thebooks.pl</strong><br>
+                <em>Bücher</em><br>
+                Ein Antiquariat/Buchhandlung. Sehr große Auswahl an englischsprachigen Büchern zu billigen Preisen, falls dir die Bücher ausgehen. <br>
+                <a href="https://maps.app.goo.gl/oJFufL1EELYXUVx86" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="Freiwilligenwohnung">
+                <strong>Freiwilligenwohnung</strong><br>
+                <em>Freiwilligenwohnung</em><br>
+                Die PNWM-Wohnung für die Freiwilligenwohnung<br>
+                <a href="https://maps.app.goo.gl/eB4qvxQz4CzGP7iy5" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="PNWM">
+                <strong>PNWM</strong><br>
+                <em>PNWM</em><br>
+                Das PNWM-Büro<br>
+                <a href="https://maps.app.goo.gl/g8XmNtroN9HDsniq6" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="Kultur">
+                <strong>Atlantic Kino</strong><br>
+                <em>Kultur</em><br>
+                Da die meisten internationalen Kinofilme nur mit polnischem Untertitel versehen sind, kann man als nicht-polnischsprachige Person auch gut ins Kino!<br>
+                <a href="https://maps.app.goo.gl/3GvpnPwj6MY24RRL7" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="Kultur">
+                <strong>Praga Centrum</strong><br>
+                <em>Kultur</em><br>
+                Konzertsaal. Immer mal wieder gibt es Livemusik und tolle veranstaltungen<br>
+                <a href="https://maps.app.goo.gl/1GEaU77j5VEggbyq8" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="Ausgehen">
+                <strong>Plan B</strong><br>
+                <em>Ausgehen</em><br>
+                Eine Bar mit großer Tanzfläche. Oft mit Livemusik <br>
+                <a href="https://maps.app.goo.gl/nEMG8yVXRe7z6zyF6" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="Ausgehen">
+                <strong>W Oparach Absurdu.</strong><br>
+                <em>Ausgehen</em><br>
+                Eine Kneipe die, wie der Name schon sagt, ein etwas absurdes Ambiente.<br>
+                <a href="https://maps.app.goo.gl/HEckJQ8aZ2sv8367A" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="Ausgehen">
+                <strong>Świetlica</strong><br>
+                <em>Ausgehen</em><br>
+                Eine stimmungsvolle Bar mit netten Leuten. Leider oft sehr voll. <br>
+                <a href="https://maps.app.goo.gl/wqNzsdzUQwsCFwq36" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="Lebensmittel">
+                <strong>Warzywniak po Schodkach</strong><br>
+                <em>Lebensmittel</em><br>
+                Fester Obst- und Gemüsestand. Hier gibt es tolle Qualität zu guten Preisen. Mit ein bisschen Lernen kann man hier auch gut auf Polnisch einkaufen üben und sich der Komplexität der polnischen Fälle stellen<br>
+                <a href="https://maps.app.goo.gl/mXccfojeJZeLQvM66" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="Lebensmittel">
+                <strong>Pers Pol</strong><br>
+                <em>Lebensmittel</em><br>
+                Persische Lebensmittel und Gewürze<br>
+                <a href="https://maps.app.goo.gl/NPoVY8hQ6vPJX3X19" target="_blank">Navigation öffnen</a>
+            </div>
+            
+            <div class="entry" data-category="Sonstiges">
+                <strong>Bazar na Kole</strong><br>
+                <em>Sonstiges</em><br>
+                Größter Flohmarkt in Warschau bei der Tram-Haltestelle in Koło<br>
+                <a href="https://maps.app.goo.gl/x4VGDJ4Nd6XAkY3w6" target="_blank">Navigation öffnen</a>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const map = L.map('map').setView([52.23, 21.01], 12);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap-Mitwirkende'
+        }).addTo(map);
+
+        const markers = [];
+
+        const data = [{"Beschreibung": "Caf\u00e9 mit leckerem Kaffee und sehr sehr guten Zimtschnecken", "Kategorie": "Caf\u00e9", "Koordinaten": "52.24769305452063, 21.063623009239254", "Latitude": 52.24769305452063, "Link zu Google Maps": "https://maps.app.goo.gl/tjhmBWepWSi6xTNB7", "Longitude": 21.063623009239254, "Titel": "No i Co "}, {"Beschreibung": "Kleines Caf\u00e9 mit leckeren Kuchen. Bester Kaffee in Warschau. Im Sommer kann man sch\u00f6n drau\u00dfen sitzen.", "Kategorie": "Caf\u00e9", "Koordinaten": "52.21885562029318, 21.018140078518204", "Latitude": 52.21885562029318, "Link zu Google Maps": "https://maps.app.goo.gl/h3wrRxX7LthzkYUH7", "Longitude": 21.018140078518204, "Titel": "El Cafetero Kawiarnia - Plac Zbawiciela"}, {"Beschreibung": "Caf\u00e9 mit Garten. Das Konzept: Caf\u00e9 und Plattenladen zugleich. ", "Kategorie": "Caf\u00e9", "Koordinaten": "52.23765261187229, 21.053820526091624", "Latitude": 52.23765261187229, "Link zu Google Maps": "https://maps.app.goo.gl/vckk6AL5k1ddGrqn6", "Longitude": 21.053820526091624, "Titel": "HA\u0141AS Coffee+Vinyl"}, {"Beschreibung": "Caf\u00e9 in einem M\u00f6belladen? Hier kann man alte M\u00f6bel und Accessoires kaufen und gleichzeitig bei einem Kaffee oder Tee interessante Inneneinrichtung begutachten. ", "Kategorie": "Caf\u00e9", "Koordinaten": "52.23961932567582, 21.06012695153636", "Latitude": 52.23961932567582, "Link zu Google Maps": "https://maps.app.goo.gl/V1gv4nRWcxyv1ATA6", "Longitude": 21.06012695153636, "Titel": "Norm Core | Vintage Kolektyw"}, {"Beschreibung": "Thail\u00e4ndisches Restaurant mit gro\u00dfer Auswahl. ", "Kategorie": "Restaurant", "Koordinaten": "52.2434558123164, 21.003425545305003", "Latitude": 52.2434558123164, "Link zu Google Maps": "https://maps.app.goo.gl/DidBUQQ7UP9tBJgr7", "Longitude": 21.003425545305003, "Titel": "Thaisty "}, {"Beschreibung": "Veganes Restaurant. Polnische Speisen wie Kotlet Schabowy vegan zubereitet.", "Kategorie": "Restaurant", "Koordinaten": "52.22764286062013, 21.017473624419", "Latitude": 52.22764286062013, "Link zu Google Maps": "https://maps.app.goo.gl/h5DYtiEg85LpWDsX7", "Longitude": 21.017473624419, "Titel": "Lokal Vegan Bistro"}, {"Beschreibung": "Das DHI hat eine Bibliothek mit deutschsprachigen B\u00fcchern", "Kategorie": "B\u00fccher", "Koordinaten": "52.22596077072658, 21.024015698720437", "Latitude": 52.22596077072658, "Link zu Google Maps": "https://maps.app.goo.gl/v5nd3TCNddCcj5ALA", "Longitude": 21.024015698720437, "Titel": "Deutsches Historisches Institut Warschau"}, {"Beschreibung": "Ein Antiquariat/Buchhandlung. Sehr gro\u00dfe Auswahl an englischsprachigen B\u00fcchern zu billigen Preisen, falls dir die B\u00fccher ausgehen. ", "Kategorie": "B\u00fccher", "Koordinaten": "52.19162627950236, 21.024028310055815", "Latitude": 52.19162627950236, "Link zu Google Maps": "https://maps.app.goo.gl/oJFufL1EELYXUVx86", "Longitude": 21.024028310055815, "Titel": "Thebooks.pl"}, {"Beschreibung": "Die PNWM-Wohnung f\u00fcr die Freiwilligenwohnung", "Kategorie": "Freiwilligenwohnung", "Koordinaten": "52.24525388554155, 21.070544770347844", "Latitude": 52.24525388554155, "Link zu Google Maps": "https://maps.app.goo.gl/eB4qvxQz4CzGP7iy5", "Longitude": 21.070544770347844, "Titel": "Freiwilligenwohnung"}, {"Beschreibung": "Das PNWM-B\u00fcro", "Kategorie": "PNWM", "Koordinaten": "52.226117730195305, 21.06432723730169", "Latitude": 52.226117730195305, "Link zu Google Maps": "https://maps.app.goo.gl/g8XmNtroN9HDsniq6", "Longitude": 21.06432723730169, "Titel": "PNWM"}, {"Beschreibung": "Da die meisten internationalen Kinofilme nur mit polnischem Untertitel versehen sind, kann man als nicht-polnischsprachige Person auch gut ins Kino!", "Kategorie": "Kultur", "Koordinaten": "52.232260599004846, 21.01245018543777", "Latitude": 52.232260599004846, "Link zu Google Maps": "https://maps.app.goo.gl/3GvpnPwj6MY24RRL7", "Longitude": 21.01245018543777, "Titel": "Atlantic Kino"}, {"Beschreibung": "Konzertsaal. Immer mal wieder gibt es Livemusik und tolle veranstaltungen", "Kategorie": "Kultur", "Koordinaten": "52.261718271760444, 21.049327010926902", "Latitude": 52.261718271760444, "Link zu Google Maps": "https://maps.app.goo.gl/1GEaU77j5VEggbyq8", "Longitude": 21.049327010926902, "Titel": "Praga Centrum"}, {"Beschreibung": "Eine Bar mit gro\u00dfer Tanzfl\u00e4che. Oft mit Livemusik ", "Kategorie": "Ausgehen", "Koordinaten": "52.220090191369835, 21.019023718316337", "Latitude": 52.220090191369835, "Link zu Google Maps": "https://maps.app.goo.gl/nEMG8yVXRe7z6zyF6", "Longitude": 21.019023718316337, "Titel": "Plan B"}, {"Beschreibung": "Eine Kneipe die, wie der Name schon sagt, ein etwas absurdes Ambiente.", "Kategorie": "Ausgehen", "Koordinaten": "52.25279682043708, 21.039355883951966", "Latitude": 52.25279682043708, "Link zu Google Maps": "https://maps.app.goo.gl/HEckJQ8aZ2sv8367A", "Longitude": 21.039355883951966, "Titel": "W Oparach Absurdu."}, {"Beschreibung": "Eine stimmungsvolle Bar mit netten Leuten. Leider oft sehr voll. ", "Kategorie": "Ausgehen", "Koordinaten": "52.21666614511844, 21.019696383937138", "Latitude": 52.21666614511844, "Link zu Google Maps": "https://maps.app.goo.gl/wqNzsdzUQwsCFwq36", "Longitude": 21.019696383937138, "Titel": "\u015awietlica"}, {"Beschreibung": "Fester Obst- und Gem\u00fcsestand. Hier gibt es tolle Qualit\u00e4t zu guten Preisen. Mit ein bisschen Lernen kann man hier auch gut auf Polnisch einkaufen \u00fcben und sich der Komplexit\u00e4t der polnischen F\u00e4lle stellen", "Kategorie": "Lebensmittel", "Koordinaten": "52.24554338944784, 21.08546464293842", "Latitude": 52.24554338944784, "Link zu Google Maps": "https://maps.app.goo.gl/mXccfojeJZeLQvM66", "Longitude": 21.08546464293842, "Titel": "Warzywniak po Schodkach"}, {"Beschreibung": "Persische Lebensmittel und Gew\u00fcrze", "Kategorie": "Lebensmittel", "Koordinaten": "52.24839865888667, 21.063587881950514", "Latitude": 52.24839865888667, "Link zu Google Maps": "https://maps.app.goo.gl/NPoVY8hQ6vPJX3X19", "Longitude": 21.063587881950514, "Titel": "Pers Pol"}, {"Beschreibung": "Gr\u00f6\u00dfter Flohmarkt in Warschau bei der Tram-Haltestelle in Ko\u0142o", "Kategorie": "Sonstiges", "Koordinaten": "52.246052242515375, 20.941035108959444", "Latitude": 52.246052242515375, "Link zu Google Maps": "https://maps.app.goo.gl/x4VGDJ4Nd6XAkY3w6", "Longitude": 20.941035108959444, "Titel": "Bazar na Kole"}];
+
+        data.forEach(item => {
+            const marker = L.marker([item.Latitude, item.Longitude]).addTo(map);
+            marker.bindPopup("<strong>" + item.Titel + "</strong><br>" +
+                             "<em>" + item.Kategorie + "</em><br>" +
+                             item.Beschreibung + "<br>" +
+                             "<a href='" + item["Link zu Google Maps"] + "' target='_blank'>Navigation öffnen</a>");
+            marker._customCategory = item.Kategorie;
+            markers.push(marker);
+        });
+
+        const categoryFilter = document.getElementById('categoryFilter');
+        const entries = document.querySelectorAll('.entry');
+
+        categoryFilter.addEventListener('change', function() {
+            const selected = this.value;
+            entries.forEach(entry => {
+                if (selected === "Alle" || entry.dataset.category === selected) {
+                    entry.style.display = "block";
+                } else {
+                    entry.style.display = "none";
+                }
+            });
+            markers.forEach(marker => {
+                if (selected === "Alle" || marker._customCategory === selected) {
+                    map.addLayer(marker);
+                } else {
+                    map.removeLayer(marker);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
